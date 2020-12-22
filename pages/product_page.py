@@ -33,5 +33,9 @@ class ProductPage(BasePage):
             "Success message is present, though it shouldn't"
 
     def success_message_should_disappear(self):
-        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE) == True,\
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE) == True, \
             "Success message is present, though it shouldn't"
+
+    def should_be_able_to_go_to_login_page(self):
+        self.go_to_login_page()
+        assert "login" in self.browser.current_url, "Wrong URL - do not contains 'login'"
