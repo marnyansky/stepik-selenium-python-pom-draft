@@ -19,7 +19,7 @@ class ProductPage(BasePage):
     def product_should_be_in_basket_with_the_same_name_and_the_same_price(self):
         # Проверка сообщений с ключевыми элементами: название продукта, цена продукта
         expected_product_added_message = self.product_name + " has been added to your basket."
-        actual_product_added_message = self.browser.find_element(*ProductPageLocators.PRODUCT_ADDED_MESSAGE).text
+        actual_product_added_message = self.browser.find_element(*ProductPageLocators.SUCCESS_MESSAGE).text
         assert expected_product_added_message == actual_product_added_message, \
             "The product added to basket has different name"
 
@@ -27,3 +27,11 @@ class ProductPage(BasePage):
         actual_basket_total_message = self.browser.find_element(*ProductPageLocators.BASKET_TOTAL_MESSAGE).text
         assert expected_basket_total_message == actual_basket_total_message, \
             "The product added to basket has different price"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE) == True, \
+            "Success message is present, though it shouldn't"
+
+    def success_message_should_disappear(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE) == True,\
+            "Success message is present, though it shouldn't"

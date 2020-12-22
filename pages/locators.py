@@ -13,6 +13,6 @@ class LoginPageLocators():
 class ProductPageLocators():
     PRODUCT_NAME = (By.TAG_NAME, "h1")
     PRODUCT_PRICE = (By.CSS_SELECTOR, "div.product_main > p.price_color")
-    PRODUCT_ADDED_MESSAGE = (By.CSS_SELECTOR, "#messages > :first-child > .alertinner")
+    SUCCESS_MESSAGE = (By.CSS_SELECTOR, "#messages > :first-child > .alertinner")
     BASKET_TOTAL_MESSAGE = (By.CSS_SELECTOR, "#messages > :nth-child(3) > .alertinner > :first-child")
     ADD_TO_BASKET_BUTTON = (By.CLASS_NAME, "btn-add-to-basket")
