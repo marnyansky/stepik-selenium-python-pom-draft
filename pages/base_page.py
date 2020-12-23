@@ -1,4 +1,5 @@
 import math
+import time
 
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -14,13 +15,27 @@ class BasePage():
         self.url = url
         self.browser.implicitly_wait(timeout)
 
-    def open(self):
-        self.browser.get(self.url)
-
-    def click_clear_input(self, field, text):
+    def fill_field(self, field, text):
         field.click()
         field.clear()
         field.send_keys(text)
+
+    def go_to_basket(self):
+        view_basket_button = self.browser.find_element(*MainPageLocators.VIEW_BASKET_BUTTON)
+        view_basket_button.click()
+
+    def go_to_login_page(self):
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        link.click()
+
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(
+                EC.presence_of_element_located((how, what))
+            )
+        except TimeoutException:
+            return False
+        return True
 
     def is_element_present(self, how, what):
         try:
@@ -38,18 +53,9 @@ class BasePage():
             return True
         return False
 
-    def is_disappeared(self, how, what, timeout=4):
-        try:
-            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(
-                EC.presence_of_element_located((how, what))
-            )
-        except TimeoutException:
-            return False
-        return True
-
-    def go_to_login_page(self):
-        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
-        link.click()
+    def open(self):
+        self.browser.get(self.url)
+        time.sleep(2)
 
     def should_be_authorized_user(self):
         assert self.is_element_present(*BasePageLocators.USER_ICON), \
@@ -57,10 +63,6 @@ class BasePage():
 
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not present"
-
-    def go_to_basket(self):
-        view_basket_button = self.browser.find_element(*MainPageLocators.VIEW_BASKET_BUTTON)
-        view_basket_button.click()
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert

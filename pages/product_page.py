@@ -12,7 +12,6 @@ class ProductPage(BasePage):
         self.product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
         self.product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
 
-        # Нажатие кнопки 'Add to basket'
         add_to_basket_button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         add_to_basket_button.click()
 
